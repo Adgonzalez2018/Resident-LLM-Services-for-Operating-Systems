@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+
+# Results and logs
+results/
+*.log
+*.csv
+
+# Model cache
+.cache/
+models/
+
+# OS
+.DS_Store
+```
+
+### 3. Add a `LICENSE` file (MIT is standard):
+```
+MIT License
+
+Copyright (c) 2024 Alexander Gonzalez
+
+Permission is hereby granted, free of charge, to any person obtaining a copy...
