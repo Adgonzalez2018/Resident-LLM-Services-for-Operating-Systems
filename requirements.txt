@@ -1,0 +1,14 @@
+# Core ML/LLM dependencies
+torch>=2.0.0
+transformers>=4.30.0
+
+# System monitoring and utilities
+psutil>=5.9.0
+
+# For experiment tracking and analysis (optional)
+numpy>=1.24.0
+pandas>=2.0.0
+matplotlib>=3.7.0
+
+# Progress bars for experiments
+tqdm>=4.65.0
