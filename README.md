@@ -75,10 +75,10 @@ The PSI-gated system monitors `/proc/pressure/cpu` and defers requests when aver
 
 - **OS:** Linux with cgroups v2 support (tested on Ubuntu 25.10)
 - **Python:** 3.8+
-- **Dependencies:** `transformers`, `torch`, `psutil`
+- **Root access:** Required for cgroups configuration
 
 ```bash
-pip install transformers torch psutil
+pip install -r requirements.txt
 ```
 
 ## Usage
@@ -87,13 +87,20 @@ pip install transformers torch psutil
 
 ```bash
 # Baseline (unrestricted)
-python run_experiment.py --config baseline --concurrency 4
+python llm_server.py --config baseline --concurrency 4
 
 # cgroups-only (static limits)
-sudo python run_experiment.py --config cgroups --concurrency 4
+sudo bash run_experiments.sh
 
 # cgroups+PSI (pressure-aware)
-sudo python run_experiment.py --config cgroups-psi --concurrency 4
+sudo bash run_psi_experiments.sh
+```
+
+### Generate Test Requests
+
+```bash
+# Generate concurrent requests with varied prompts
+python request_generator.py --num-requests 20 --concurrency 8
 ```
 
 ### Monitoring PSI
@@ -111,15 +118,14 @@ cat /proc/pressure/cpu
 ```
 .
 ├── README.md
+├── requirements.txt             # Python dependencies
 ├── paper.pdf                    # Full research paper
-├── experiments/
-│   ├── run_experiment.py        # Main experiment runner
-│   ├── psi_controller.py        # PSI-gated admission logic
-│   └── cgroup_setup.sh          # cgroups v2 configuration
-├── analysis/
-│   ├── analyze_results.py       # Statistical analysis
-│   └── plots.py                 # Visualization code
-└── results/
+├── llm_server.py                # GPT-2 inference server
+├── psi_admission.py             # PSI-gated admission controller
+├── request_generator.py         # Concurrent request generator
+├── run_experiments.sh           # cgroups-only experiments
+├── run_psi_experiments.sh       # cgroups+PSI experiments
+└── results/                     # Experiment outputs
     └── latency_distributions.csv
 ```
 
